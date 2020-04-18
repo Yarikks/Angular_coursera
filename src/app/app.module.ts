@@ -20,7 +20,8 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 
 import { DishService } from './service/dish.service';
-
+import { PromotionService } from './service/promotion.service';
+import { from } from 'rxjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { DishService } from './service/dish.service';
     MatButtonModule
   ],
   providers: [
-    DishService
+    DishService,
+    PromotionService
   ],
   bootstrap: [AppComponent]
 })
