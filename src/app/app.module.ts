@@ -21,7 +21,8 @@ import { ContactComponent } from './contact/contact.component';
 
 import { DishService } from './service/dish.service';
 import { PromotionService } from './service/promotion.service';
-import { from } from 'rxjs';
+import { LeaderService } from './service/leader.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,8 @@ import { from } from 'rxjs';
   ],
   providers: [
     DishService,
-    PromotionService
+    PromotionService,
+    LeaderService
   ],
   bootstrap: [AppComponent]
 })
