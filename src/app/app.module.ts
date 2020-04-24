@@ -17,6 +17,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 import { AppComponent } from './app.component';
 
@@ -28,12 +30,12 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
 
 import { DishService } from './service/dish.service';
 import { PromotionService } from './service/promotion.service';
 import { LeaderService } from './service/leader.service';
-import { LoginComponent } from './login/login.component';
-import { from } from 'rxjs';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { from } from 'rxjs';
     MatCheckboxModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSliderModule
   ],
   providers: [
     DishService,

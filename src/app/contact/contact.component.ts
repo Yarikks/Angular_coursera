@@ -47,8 +47,7 @@ export class ContactComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   createForm() {
     this.feedbackForm = this.fb.group({
