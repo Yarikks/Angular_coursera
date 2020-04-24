@@ -45,11 +45,16 @@
 
     <div fxFlex>
         <div [hidden]="commentForm.invalid">
-            <p>{{commentForm.value.comment}}</p>
-            <p>{{commentForm.value.rating}} Stars</p>
-            <p> -- {{commentForm.value.author}}</p>
+            <mat-list >
+                <h3>Preview comment</h3>
+                <mat-list-item>
+                    <p matLine>{{commentForm.value.comment}}</p>
+                    <p matLine>{{commentForm.value.rating}} Stars</p>
+                    <p matLine> -- {{commentForm.value.author}}</p>
+                </mat-list-item>
+            </mat-list>  
         </div>
-        
+      
 
         <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
             <p>
