@@ -8,7 +8,7 @@
                     <h3>{{dish.name | uppercase}}</h3>
                 </mat-card-title>
             </mat-card-header>
-            <img mat-card-image src={{dish.image}} alt={{dish.name}}>
+            <img mat-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
             <mat-card-content>
                 <p>{{dish.description}}</p>
             </mat-card-content>
@@ -27,7 +27,7 @@
         </mat-card>
     </div>
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="30" *ngIf="dish">
         <mat-list fxFlex>
             <h1>Comments</h1>
             <mat-list-item *ngFor="let comments of dish.comments">
@@ -43,7 +43,7 @@
         <h4>Loading...</h4>
     </div>
 
-    <div fxFlex>
+    <div fxFlex="30" fxLayoutGap="50px">
         <div [hidden]="commentForm.invalid">
             <mat-list >
                 <h3>Preview comment</h3>
@@ -75,7 +75,5 @@
             <button type="submit" mat-button class="background-primary text-floral-white"
                 [disabled]="commentForm.invalid">Submit</button>
         </form>
-
     </div>
-
 </div>
