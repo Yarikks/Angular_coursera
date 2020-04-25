@@ -41,6 +41,7 @@ import { ProcessHTTPMsgService } from './service/process-httpmsg.service';
 
 import { baseURL } from './shared/baseurl';
 import { from } from 'rxjs';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { from } from 'rxjs';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
