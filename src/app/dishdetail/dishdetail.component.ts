@@ -26,6 +26,9 @@ export class DishdetailComponent implements OnInit {
   commentt: Comment
   @ViewChild('cform',{static:false}) commentFormDirective;
 
+  //handling errors
+  errMsg: string;
+
   commentErrors = {
     'author': '',
     'comment': ''
@@ -56,7 +59,8 @@ export class DishdetailComponent implements OnInit {
 
     this.route.params
       .pipe(switchMap((params:Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id); });
+      .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id); },
+        errmsg => this.errMsg = <any>errmsg);
   }
 
   createForm() {

@@ -37,8 +37,10 @@ import { LoginComponent } from './login/login.component';
 import { DishService } from './service/dish.service';
 import { PromotionService } from './service/promotion.service';
 import { LeaderService } from './service/leader.service';
+import { ProcessHTTPMsgService } from './service/process-httpmsg.service';
 
 import { baseURL } from './shared/baseurl';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import { baseURL } from './shared/baseurl';
     DishService,
     PromotionService,
     LeaderService,
+    ProcessHTTPMsgService,
     { provide: 'BaseURL', useValue: baseURL }
   ],
   entryComponents: [
