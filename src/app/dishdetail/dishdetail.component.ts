@@ -29,6 +29,9 @@ export class DishdetailComponent implements OnInit {
   //handling errors
   errMsg: string;
 
+  // adding commets
+  dishCopy: Dish;
+
   commentErrors = {
     'author': '',
     'comment': ''
@@ -59,7 +62,7 @@ export class DishdetailComponent implements OnInit {
 
     this.route.params
       .pipe(switchMap((params:Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id); },
+      .subscribe(dish => {this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id); },
         errmsg => this.errMsg = <any>errmsg);
   }
 
@@ -104,13 +107,19 @@ export class DishdetailComponent implements OnInit {
     this.commentt = this.commentForm.value;
     console.log(this.commentt);
 
-    this.dish.comments.push({
+    this.dishCopy.comments.push({
       rating: this.commentt.rating,
       comment: this.commentt.comment,
       author: this.commentt.author,
       date: Date.now().toString()
     });
-
+    
+    this.dishservice.putDish(this.dishCopy)
+      .subscribe(dish => {
+        this.dish = dish;
+        this.dishCopy = dish;
+      },
+      errmsg => {this.dish = null; this.dishCopy = null; this.errMsg = <any>errmsg; });
 
     this.commentForm.reset({
       comment: '',
