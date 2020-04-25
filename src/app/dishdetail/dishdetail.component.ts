@@ -6,11 +6,25 @@ import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
 import { Dish } from '../shared/dish';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    trigger('visibility',[
+      state('shown', style({
+        transform: 'scale(1.0)',
+        opacity: 1
+      })),
+      state('hidden', style({
+        transform: 'scale(0.5)',
+        opacity: 0
+      })),
+      transition('* => *', animate('0.5s ease-in-out'))
+    ])
+  ]
 })
 
 export class DishdetailComponent implements OnInit {
@@ -24,13 +38,16 @@ export class DishdetailComponent implements OnInit {
   // comment form
   commentForm: FormGroup;
   commentt: Comment
-  @ViewChild('cform',{static:false}) commentFormDirective;
+  @ViewChild('cform', { static: false }) commentFormDirective;
 
   //handling errors
   errMsg: string;
 
   // adding commets
   dishCopy: Dish;
+
+  // animation
+  visibility = 'shown';
 
   commentErrors = {
     'author': '',
@@ -61,8 +78,8 @@ export class DishdetailComponent implements OnInit {
       .subscribe(dishIds => this.dishIds = dishIds);
 
     this.route.params
-      .pipe(switchMap((params:Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => {this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id); },
+      .pipe(switchMap((params: Params) => {this.visibility='hidden'; return this.dishservice.getDish(params['id']); }))
+      .subscribe(dish => { this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id); this.visibility='shown'; },
         errmsg => this.errMsg = <any>errmsg);
   }
 
@@ -77,24 +94,24 @@ export class DishdetailComponent implements OnInit {
     this.commentForm.valueChanges
       .subscribe(data => this.onValueChanged(data))
 
-      this.onValueChanged();
+    this.onValueChanged();
   }
 
   onValueChanged(data?: any) {
-    if(!this.commentForm) {return;}
+    if (!this.commentForm) { return; }
     const form = this.commentForm;
 
-    for(const field in this.commentErrors){
-      if(this.commentErrors.hasOwnProperty(field)){
+    for (const field in this.commentErrors) {
+      if (this.commentErrors.hasOwnProperty(field)) {
         //clear prev error message
         this.commentErrors[field] = '';
         const control = form.get(field);
 
-        if(control && control.dirty && !control.valid){
+        if (control && control.dirty && !control.valid) {
           const messages = this.validComment[field];
 
-          for(const key in control.errors){
-            if(control.errors.hasOwnProperty(key)){
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
               this.commentErrors[field] += messages[key] + ' ';
             }
           }
@@ -113,20 +130,20 @@ export class DishdetailComponent implements OnInit {
       author: this.commentt.author,
       date: Date.now().toString()
     });
-    
+
     this.dishservice.putDish(this.dishCopy)
       .subscribe(dish => {
         this.dish = dish;
         this.dishCopy = dish;
       },
-      errmsg => {this.dish = null; this.dishCopy = null; this.errMsg = <any>errmsg; });
+        errmsg => { this.dish = null; this.dishCopy = null; this.errMsg = <any>errmsg; });
 
     this.commentForm.reset({
       comment: '',
       author: '',
       date: ''
     });
-    this.commentFormDirective.resetForm({rating:5});
+    this.commentFormDirective.resetForm({ rating: 5 });
   }
 
   setPrevNext(dishId: string) {

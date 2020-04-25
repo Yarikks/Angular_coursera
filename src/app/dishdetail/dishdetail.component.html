@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
     fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" fxFlex.sm="50">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
@@ -27,8 +27,8 @@
         </mat-card>
     </div>
 
-    <div fxFlex="30" *ngIf="dish">
-        <mat-list fxFlex>
+    <div fxFlex="50" *ngIf="dish" [@visibility]="visibility">
+        <mat-list>
             <h1>Comments</h1>
             <mat-list-item *ngFor="let comments of dish.comments">
                 <p matLine> {{comments.comment}} </p>
@@ -36,31 +36,14 @@
                 <p matLine> -- {{comments.author}} {{comments.date | date}} </p>
             </mat-list-item>
         </mat-list>
-    </div>
-
-    <div fxFlex [hidden]="dish || errMsg">
-        <mat-spinner></mat-spinner>
-        <h4>Loading...</h4>
-    </div>
-    
-    <div fxFlex *ngIf="errMsg">
-        <h2>Error</h2>
-        <h4>{{errMsg}}</h4>
-    </div>
-
-    <div fxFlex="30" fxLayoutGap="50px">
-        <div [hidden]="commentForm.invalid">
-            <mat-list >
-                <h3>Preview comment</h3>
-                <mat-list-item>
-                    <p matLine>{{commentForm.value.comment}}</p>
-                    <p matLine>{{commentForm.value.rating}} Stars</p>
-                    <p matLine> -- {{commentForm.value.author}}</p>
-                </mat-list-item>
-            </mat-list>  
-        </div>
-      
-
+        <mat-list *ngIf="commentForm.valid">
+            <h3>Preview comment</h3>
+            <mat-list-item>
+                <p matLine>{{commentForm.value.comment}}</p>
+                <p matLine>{{commentForm.value.rating}} Stars</p>
+                <p matLine> -- {{commentForm.value.author}}</p>
+            </mat-list-item>
+        </mat-list>
         <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
             <p>
                 <mat-form-field class="half-width">
@@ -81,4 +64,17 @@
                 [disabled]="commentForm.invalid">Submit</button>
         </form>
     </div>
+
+
+    <div fxFlex [hidden]="dish || errMsg">
+        <mat-spinner></mat-spinner>
+        <h4>Loading...</h4>
+    </div>
+
+    <div fxFlex *ngIf="errMsg">
+        <h2>Error</h2>
+        <h4>{{errMsg}}</h4>
+    </div>
+
+
 </div>
