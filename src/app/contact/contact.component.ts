@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animations';
+import { flyInOut, expand } from '../animations/app.animations';
+import { FeedbackService } from '../service/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -12,7 +13,8 @@ import { flyInOut } from '../animations/app.animations';
     'style': 'display:block;'
   },
   animations: [
-    flyInOut()
+    flyInOut(),
+    expand()
   ]
 })
 export class ContactComponent implements OnInit {
@@ -22,6 +24,13 @@ export class ContactComponent implements OnInit {
   contactType = ContactType;
 
   @ViewChild('fform',{static:false}) feedbackFormDirective;
+
+  // errors
+  errMsg: string;
+
+  // feedback
+  feedbackCopy: Feedback;
+  spinnerVisible = false;
 
   formErrors = {
     'firstname': '',
@@ -51,7 +60,8 @@ export class ContactComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private feedbackService: FeedbackService) {
     this.createForm();
   }
 
@@ -96,8 +106,11 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.spinnerVisible = true;
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
+
+    this.onSubmitting();
+
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -108,5 +121,19 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     this.feedbackFormDirective.resetForm();
+
+  }
+
+  onSubmitting() {
+    this.feedbackService.submitFeedback(this.feedback)
+      .subscribe( feedback =>{
+        this.feedbackCopy = feedback;
+        this.feedback = feedback;
+        this.spinnerVisible = false;
+        setTimeout(() => {
+          this.feedback = null;
+        }, 5000);
+      },
+      errmsg => {this.feedback=null; this.errMsg = <any>errmsg});
   }
 }

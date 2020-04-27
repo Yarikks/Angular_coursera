@@ -10,7 +10,7 @@ export function visibility() {
             transform: 'scale(0.5)',
             opacity: 0
         })),
-        transition('* => *', animate('0.5s ease-in-out'))
+        transition('* => *', animate('0.2s ease-in-out'))
     ]);
 }
 

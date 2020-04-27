@@ -15,8 +15,10 @@
         </mat-card-content>
     </mat-card>
     <div fxFlex [hidden]="dish || dishErrMsg">
-        <mat-spinner></mat-spinner> <h4>Loading...</h4>
+        <mat-spinner></mat-spinner>
+        <h4>Loading...</h4>
     </div>
+    <!-- Error handling -->
     <div fxFlex *ngIf="dishErrMsg">
         <h2>Error</h2>
         <h4>{{dishErrMsg}}</h4>
@@ -29,17 +31,23 @@
                 <h3>{{promotion.name | uppercase}}</h3>
             </mat-card-title>
         </mat-card-header>
-        <img mat-card-image src={{promotion.image}} alt={{promotion.name}}>
+        <img mat-card-image src="{{BaseURL + promotion.image}}" alt={{promotion.name}}>
         <mat-card-content>
             <p>{{promotion.description}}
             </p>
         </mat-card-content>
     </mat-card>
-    <div fxFlex [hidden]="promotion">
-        <mat-spinner></mat-spinner> <h4>Loading...</h4>
+    <div fxFlex [hidden]="promotion || promErrMsg">
+        <mat-spinner></mat-spinner>
+        <h4>Loading...</h4>
+    </div>
+    <!-- Error handling -->
+    <div fxFlex *ngIf="promErrMsg">
+        <h2>Error</h2>
+        <h4>{{dishErrMsg}}</h4>
     </div>
 
-    
+
     <mat-card *ngIf="leader" fxFlex [@expand]>
         <mat-card-header>
             <div mat-card-avatar></div>
@@ -47,13 +55,19 @@
                 <h3>{{leader.name | uppercase}}</h3>
             </mat-card-title>
         </mat-card-header>
-        <img mat-card-image src={{leader.image}} alt={{leader.name}}>
+        <img mat-card-image src="{{BaseURL + leader.image}}" alt={{leader.name}}>
         <mat-card-content>
             <p>{{leader.designation}}</p>
             <p>{{leader.description}}</p>
         </mat-card-content>
     </mat-card>
-    <div fxFlex [hidden]="leader">
-        <mat-spinner></mat-spinner> <h4>Loading...</h4>
+    <div fxFlex [hidden]="leader || leadErrMsg">
+        <mat-spinner></mat-spinner>
+        <h4>Loading...</h4>
+    </div>
+    <!-- Error handling -->
+    <div fxFlex *ngIf="leadErrMsg">
+        <h2>Error</h2>
+        <h4>{{dishErrMsg}}</h4>
     </div>
 </div>
